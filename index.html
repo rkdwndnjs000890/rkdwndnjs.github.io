@@ -16,15 +16,9 @@
 
     #info-box {
       margin-bottom: 25px;
-      font-size: 18px;
-    }
-
-    input {
-      padding: 8px;
-      margin: 5px;
-      border: 1px solid #aaa;
-      border-radius: 6px;
-      font-size: 16px;
+      font-size: 20px;
+      font-weight: bold;
+      color: #333;
     }
 
     iframe {
@@ -45,11 +39,9 @@
 <body>
   <h1>P5.js 과제 자동 슬라이드</h1>
 
-  <!-- 이름/학번 입력칸 -->
+  <!-- 이름/학번 고정 표시 -->
   <div id="info-box">
-    <input id="nameInput" type="text" placeholder="강주원" oninput="updateInfo()" />
-    <input id="idInput" type="text" placeholder="20201166" oninput="updateInfo()" />
-    <div id="userInfo" style="margin-top:10px; font-size:18px; color:#333;"></div>
+    20201166 &nbsp; | &nbsp; 강주원
   </div>
 
   <!-- 보여줄 iframe -->
@@ -58,19 +50,7 @@
   <div class="info" id="label">현재: 과제 1</div>
 
   <script>
-    // 이름·학번 표시
-    function updateInfo() {
-      const name = document.getElementById("nameInput").value;
-      const id = document.getElementById("idInput").value;
-
-      if (name || id) {
-        document.getElementById("userInfo").innerText = `이름: ${name}   |   학번: ${id}`;
-      } else {
-        document.getElementById("userInfo").innerText = "";
-      }
-    }
-
-    // 순서: 1 → 4 → 2 → 3
+    // 과제 순서: 1 → 4 → 2 → 3
     const pages = [
       { url: "p5_1/index.html", label: "과제 1" },
       { url: "p5_4/index.html", label: "과제 4" },
@@ -91,7 +71,7 @@
       resetTimer();
     }
 
-    // 10초마다 자동 변경
+    // 10초마다 자동 이동
     let timer = setInterval(nextPage, 10000);
 
     function resetTimer() {
@@ -99,7 +79,7 @@
       timer = setInterval(nextPage, 10000);
     }
 
-    // 스페이스바로 다음 제출물로 이동
+    // 스페이스바 누르면 즉시 다음
     document.addEventListener("keydown", (e) => {
       if (e.code === "Space") {
         e.preventDefault();
