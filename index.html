@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <title>P5.js 과제 모음 20201166 </title>
+  <title>P5.js 과제 모음 20201166 강주원</title>
   <style>
     body {
       background: #f3f3f3;
@@ -22,16 +22,16 @@
       background: white;
     }
     .info {
-      margin-top: 20px;
-      font-size: 18px;
+      margin-top: 15px;
+      font-size: 20px;
     }
   </style>
 </head>
 
 <body>
-  <h1>P5.js 과제 자동 슬라이드 (10초마다 변경)</h1>
+  <h1>P5.js 과제 슬라이드 (10초마다 자동 / 스페이스바로 수동 이동)</h1>
 
-  <!-- 여기에 스케치를 표시 -->
+  <!-- 보여줄 iframe -->
   <iframe id="viewer" src="p5_1/index.html"></iframe>
 
   <div class="info" id="label">현재: 과제 1</div>
@@ -47,14 +47,33 @@
 
     let idx = 0;
 
-    function switchPage() {
-      idx = (idx + 1) % pages.length;
+    function updateViewer() {
       document.getElementById("viewer").src = pages[idx].url;
       document.getElementById("label").innerText = "현재: " + pages[idx].label;
     }
 
-    // 10초마다 자동 교체
-    setInterval(switchPage, 10000);
+    function nextPage() {
+      idx = (idx + 1) % pages.length;
+      updateViewer();
+      resetTimer();
+    }
+
+    // 10초마다 자동으로 다음 과제로 이동
+    let timer = setInterval(nextPage, 10000);
+
+    // 타이머 리셋하기
+    function resetTimer() {
+      clearInterval(timer);
+      timer = setInterval(nextPage, 10000);
+    }
+
+    // 스페이스바 누르면 다음 과제로 이동
+    document.addEventListener('keydown', (e) => {
+      if (e.code === "Space") {
+        e.preventDefault();   // 스크롤 같은 기본 동작 방지
+        nextPage();
+      }
+    });
   </script>
 
 </body>
