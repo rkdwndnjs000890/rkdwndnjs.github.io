@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <title>P5.js 과제 모음 20201166 강주원</title>
+  <title>P5.js 과제 모음 (자동 + 스페이스바 전환)</title>
   <style>
     body {
       background: #f3f3f3;
@@ -11,8 +11,22 @@
       font-family: Arial, sans-serif;
     }
     h1 {
-      margin-bottom: 20px;
+      margin-bottom: 10px;
     }
+
+    #info-box {
+      margin-bottom: 25px;
+      font-size: 18px;
+    }
+
+    input {
+      padding: 8px;
+      margin: 5px;
+      border: 1px solid #aaa;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+
     iframe {
       width: 600px;
       height: 400px;
@@ -29,7 +43,14 @@
 </head>
 
 <body>
-  <h1>P5.js 과제 슬라이드 (10초마다 자동 / 스페이스바로 수동 이동)</h1>
+  <h1>P5.js 과제 자동 슬라이드</h1>
+
+  <!-- 이름/학번 입력칸 -->
+  <div id="info-box">
+    <input id="nameInput" type="text" placeholder="강주원" oninput="updateInfo()" />
+    <input id="idInput" type="text" placeholder="20201166" oninput="updateInfo()" />
+    <div id="userInfo" style="margin-top:10px; font-size:18px; color:#333;"></div>
+  </div>
 
   <!-- 보여줄 iframe -->
   <iframe id="viewer" src="p5_1/index.html"></iframe>
@@ -37,6 +58,18 @@
   <div class="info" id="label">현재: 과제 1</div>
 
   <script>
+    // 이름·학번 표시
+    function updateInfo() {
+      const name = document.getElementById("nameInput").value;
+      const id = document.getElementById("idInput").value;
+
+      if (name || id) {
+        document.getElementById("userInfo").innerText = `이름: ${name}   |   학번: ${id}`;
+      } else {
+        document.getElementById("userInfo").innerText = "";
+      }
+    }
+
     // 순서: 1 → 4 → 2 → 3
     const pages = [
       { url: "p5_1/index.html", label: "과제 1" },
@@ -58,19 +91,18 @@
       resetTimer();
     }
 
-    // 10초마다 자동으로 다음 과제로 이동
+    // 10초마다 자동 변경
     let timer = setInterval(nextPage, 10000);
 
-    // 타이머 리셋하기
     function resetTimer() {
       clearInterval(timer);
       timer = setInterval(nextPage, 10000);
     }
 
-    // 스페이스바 누르면 다음 과제로 이동
-    document.addEventListener('keydown', (e) => {
+    // 스페이스바로 다음 제출물로 이동
+    document.addEventListener("keydown", (e) => {
       if (e.code === "Space") {
-        e.preventDefault();   // 스크롤 같은 기본 동작 방지
+        e.preventDefault();
         nextPage();
       }
     });
