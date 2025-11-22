@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>P5.js 과제 모음 (자동 전환)</title>
+  <style>
+    body {
+      background: #f3f3f3;
+      text-align: center;
+      padding: 30px;
+      font-family: Arial, sans-serif;
+    }
+    h1 {
+      margin-bottom: 20px;
+    }
+    iframe {
+      width: 600px;
+      height: 400px;
+      border: none;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      background: white;
+    }
+    .info {
+      margin-top: 20px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>P5.js 과제 자동 슬라이드 (10초마다 변경)</h1>
+
+  <!-- 여기에 스케치를 표시 -->
+  <iframe id="viewer" src="p5_1/index.html"></iframe>
+
+  <div class="info" id="label">현재: 과제 1</div>
+
+  <script>
+    // 순서: 1 → 4 → 2 → 3
+    const pages = [
+      { url: "p5_1/index.html", label: "과제 1" },
+      { url: "p5_4/index.html", label: "과제 4" },
+      { url: "p5_2/index.html", label: "과제 2" },
+      { url: "p5_3/index.html", label: "과제 3" }
+    ];
+
+    let idx = 0;
+
+    function switchPage() {
+      idx = (idx + 1) % pages.length;
+      document.getElementById("viewer").src = pages[idx].url;
+      document.getElementById("label").innerText = "현재: " + pages[idx].label;
+    }
+
+    // 10초마다 자동 교체
+    setInterval(switchPage, 10000);
+  </script>
+
+</body>
+</html>
